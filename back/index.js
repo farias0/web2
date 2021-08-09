@@ -1,7 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const testRoutes = require('./routes/testRoutes.js')
 const bodyParser = require('body-parser')
+
+const userRoutes = require('./routes/userRoutes.js')
+const postRoutes = require('./routes/postRoutes.js')
 
 const app = express()
 const port = 3000
@@ -16,7 +18,9 @@ mongoose.connect(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(testRoutes);
+
+app.use(userRoutes);
+app.use(postRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
