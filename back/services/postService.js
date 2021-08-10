@@ -13,7 +13,7 @@ Service.getAllAsync = async () => {
 
     const searchData = await postModel.find({})
     cacheService.setAsync(allCacheKey, searchData)
-    return searchData
+    return searchData.reverse()
 };
 
 Service.getByIdAsync = async () => {}
@@ -29,7 +29,7 @@ Service.searchAsync = async (query) => {
         (err, docs) => {}
     )
     cacheService.setAsync(query, searchData)
-    return searchData
+    return searchData.reverse()
 }
 
 Service.createAsync = async (newPostData) => {
