@@ -2,13 +2,13 @@ const userModel = require("../models/userSchema");
 
 const Service = {};
 
-Service.getAll = async () => {
+Service.getAllAsync = async () => {
     return await userModel.find({});
 };
 
-Service.getById = async () => {};
+Service.getByIdAsync = async () => {};
 
-Service.create = async (newUserData) => {
+Service.createAsync = async (newUserData) => {
     const newUser = new userModel(newUserData);
     return await newUser.save();
 };

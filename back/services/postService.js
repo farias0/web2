@@ -2,13 +2,13 @@ const postModel = require("../models/postSchema");
 
 const Service = {};
 
-Service.getAll = async () => {
+Service.getAllAsync = async () => {
     return await postModel.find({});
 };
 
-Service.getById = async () => {};
+Service.getByIdAsync = async () => {};
 
-Service.create = async (newPostData) => {
+Service.createAsync = async (newPostData) => {
     const newPost = new postModel(newPostData);
     return await newPost.save();
 };
