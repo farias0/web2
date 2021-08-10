@@ -1,20 +1,30 @@
-const app = require("express")();
-const postService = require('../services/postService');
+const app = require('express')()
+const postService = require('../services/postService')
+const errors = require('../errors/postErrors')
 
-app.get("/post", async (_, response) => {
+app.get('/post', async (_, response) => {
   try {
-    response.send(await postService.getAllAsync());
+    response.send(await postService.getAllAsync())
   } catch (error) {
-    response.status(500).send(error);
+    response.status(500).send(error)
   }
-});
+})
 
-app.post("/post", async (request, response) => {
+app.post('/post', async (request, response) => {
   try {
-    response.send(await postService.createAsync(request.body));
+    response.send(await postService.createAsync(request.body))
   } catch (error) {
-    response.status(500).send(error);
-  }
-});
 
-module.exports = app;
+    switch(error) {
+      case errors.invalidToken:
+        response.status(401)
+        break
+      default:
+        response.status(500)
+    }
+
+    response.send(error.message)
+  }
+})
+
+module.exports = app

@@ -25,4 +25,8 @@ Service.loginAsync = async (loginData) => {
     }
 }
 
+Service.getUserId = (token) => {
+    return jwt.verify(token, privateKey).sub;
+}
+
 module.exports = Service
