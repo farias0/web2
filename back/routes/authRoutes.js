@@ -18,7 +18,7 @@ app.post("/login", async (request, response) => {
         response.status(500)
     }
 
-    response.send(error)
+    response.send(error.message)
   }
 })
 
