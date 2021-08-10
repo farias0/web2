@@ -1,23 +1,17 @@
-const express = require("express");
-const postModel = require("../models/postSchema");
-const app = express();
+const app = require("express")();
+const postService = require('../services/postService');
 
-app.get("/post", async (request, response) => {
-  const post = await postModel.find({});
-
+app.get("/post", async (_, response) => {
   try {
-    response.send(post);
+    response.send(await postService.getAll());
   } catch (error) {
     response.status(500).send(error);
   }
 });
 
 app.post("/post", async (request, response) => {
-  const post = new postModel(request.body);
-
   try {
-    await post.save();
-    response.send(post);
+    response.send(await postService.create(request.body));
   } catch (error) {
     response.status(500).send(error);
   }
