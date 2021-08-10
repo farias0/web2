@@ -1,23 +1,17 @@
-const express = require("express");
-const userModel = require("../models/userSchema");
-const app = express();
+const app = require("express")();
+const userService = require('../services/userService');
 
-app.get("/user", async (request, response) => {
-  const users = await userModel.find({});
-
+app.get("/user", async (_, response) => {
   try {
-    response.send(users);
+    response.send(await userService.getAll());
   } catch (error) {
     response.status(500).send(error);
   }
 });
 
 app.post("/user", async (request, response) => {
-  const user = new userModel(request.body);
-
   try {
-    await user.save();
-    response.send(user);
+    response.send(await userService.create(request.body));
   } catch (error) {
     response.status(500).send(error);
   }
