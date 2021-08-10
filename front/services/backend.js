@@ -28,3 +28,8 @@ backend.searchPosts = async (query) => {
     const response = await axios.get(url + "/post", { q: query })
     return response.data
 }
+
+backend.createPost = async (token, content) => {
+    return await genericPost('/post', 
+        "token=" + token + "&content=" + content)
+}

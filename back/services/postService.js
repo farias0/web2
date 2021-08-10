@@ -8,11 +8,11 @@ const allCacheKey = '[all]'
 const Service = {};
 
 Service.getAllAsync = async () => {
-    const cachedData = await cacheService.getAsync(allCacheKey)
-    if (cachedData) return cachedData
+    // const cachedData = await cacheService.getAsync(allCacheKey)
+    // if (cachedData) return cachedData
 
     const searchData = await postModel.find({})
-    cacheService.setAsync(allCacheKey, searchData)
+    // cacheService.setAsync(allCacheKey, searchData)
     return searchData.reverse()
 };
 
