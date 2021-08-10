@@ -2,9 +2,13 @@ const app = require('express')()
 const postService = require('../services/postService')
 const errors = require('../errors/postErrors')
 
-app.get('/post', async (_, response) => {
+app.get('/post', async (request, response) => {
   try {
-    response.send(await postService.getAllAsync())
+    if (request.query && request.query.q) {
+      response.send(await postService.searchAsync(request.query.q))
+    } else {
+      response.send(await postService.getAllAsync())
+    }
   } catch (error) {
     response.status(500).send(error)
   }

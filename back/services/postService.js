@@ -8,7 +8,16 @@ Service.getAllAsync = async () => {
     return await postModel.find({})
 };
 
-Service.getByIdAsync = async () => {};
+Service.getByIdAsync = async () => {}
+
+Service.searchAsync = async (query) => {
+    return postModel.find(
+        {
+            "content": { "$regex": query, "$options": "i" }
+        },
+        (err, docs) => {}
+    )
+}
 
 Service.createAsync = async (newPostData) => {
     try {
@@ -19,6 +28,6 @@ Service.createAsync = async (newPostData) => {
 
     const newPost = new postModel(newPostData)
     return await newPost.save()
-};
+}
 
 module.exports = Service
