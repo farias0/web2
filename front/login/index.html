@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../services/backend.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="login">
+        <div id="errors" style="color: red;">
+            <span id=userNotFound>Usuario nao existe</span>
+            <span id=wrongPassword>Senha incorreta</span>
+            <span id=internalError>Erro do servidor</span>
+        </div>
+
+        <label>Username:</label>
+        <input type="text" id="usernameInput">
+        <br>
+        <label>Password:</label>
+        <input type="text" id="passwordInput">
+        <br>
+        <input id="loginButton" type="button" value="Logar">
+    </div>
+</body>
