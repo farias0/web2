@@ -25,7 +25,12 @@ backend.signup = async (username, email, password) => {
 }
 
 backend.searchPosts = async (query) => {
-    const response = await axios.get(url + "/post", { q: query })
+    const response = await axios.get(url + "/post", { params: { q: query } })
+    return response.data
+}
+
+backend.getAllPosts = async () => {
+    const response = await axios.get(url + "/post")
     return response.data
 }
 

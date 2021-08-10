@@ -1,4 +1,5 @@
 const tokenStorageKey = "token"
+const queryStorageKey = "q"
 
 function displayContent(contents) {
     const frame = document.getElementById("content")
@@ -11,11 +12,21 @@ function displayContent(contents) {
     }
 }
 
-async function searchPosts() {
-    document.getElementById('publishField').value = ''
+async function loadAllPosts() {
+    contents = await backend.getAllPosts()
+    displayContent(contents)
+}
+
+async function triggerSearch() {
     const query = document.getElementById('searchBar').value
-    const response = await backend.searchPosts(query)
-    displayContent(response)
+    window.localStorage.setItem(queryStorageKey, query)
+    window.location='./index.html'
+}
+
+async function searchPosts(query) {
+    window.localStorage.removeItem(queryStorageKey)
+    contents = await backend.searchPosts(query)
+    displayContent(contents)
 }
 
 async function publish() {
@@ -32,21 +43,26 @@ function tokenValidation() {
     const token = window.localStorage.getItem(tokenStorageKey)
 }
 
+function logout() {
+    window.localStorage.removeItem(tokenStorageKey)
+    window.location='../index.html'
+}
+
 function init() {
     tokenValidation()
-    hideErrors()
     document.getElementById('searchBar').value = ''
     document.getElementById('publishField').value = ''
     document.getElementById('success').style.display = "none"
     document.getElementById('publishing').style.display = "none"
-    document.getElementById('searchButton').onclick=()=>{ searchPosts() }
+    document.getElementById('searchButton').onclick=()=>{ triggerSearch() }
     document.getElementById('publishButton').onclick=()=>{ publish() }
-}
 
-function hideErrors() {
-    document.getElementById('userNotFound').style.display = "none"
-    document.getElementById('wrongPassword').style.display = "none"
-    document.getElementById('internalError').style.display = "none"
+    const query = window.localStorage.getItem(queryStorageKey)
+    if (query) {
+        searchPosts(query)
+    } else {
+        loadAllPosts()
+    }
 }
 
 window.onload = init
