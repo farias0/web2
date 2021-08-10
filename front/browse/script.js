@@ -33,7 +33,8 @@ async function publish() {
     document.getElementById('searchBar').value = ''
     var awaitCreate = backend.createPost(
         window.localStorage.getItem(tokenStorageKey),
-        document.getElementById('publishField').value)
+        document.getElementById('publishField').value,
+        "text")
     document.getElementById('publishing').style.display = "block"
     await awaitCreate
     window.location='./index.html'

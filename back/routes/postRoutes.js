@@ -20,6 +20,9 @@ app.post('/post', async (request, response) => {
   } catch (error) {
 
     switch(error) {
+      case errors.invalidType:
+        response.status(400)
+        break
       case errors.invalidToken:
         response.status(401)
         break

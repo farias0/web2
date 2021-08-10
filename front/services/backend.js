@@ -34,7 +34,7 @@ backend.getAllPosts = async () => {
     return response.data
 }
 
-backend.createPost = async (token, content) => {
+backend.createPost = async (token, content, contentType) => {
     return await genericPost('/post', 
-        "token=" + token + "&content=" + content)
+        "token=" + token + "&content=" + content + "&contentType=" + contentType)
 }
