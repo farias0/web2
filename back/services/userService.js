@@ -8,6 +8,10 @@ Service.getAllAsync = async () => {
 
 Service.getByIdAsync = async () => {};
 
+Service.getByUsernameAsync = async (username) => {
+    return await userModel.findOne({ username })
+}
+
 Service.createAsync = async (newUserData) => {
     const newUser = new userModel(newUserData);
     return await newUser.save();

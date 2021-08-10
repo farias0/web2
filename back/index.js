@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
+const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes.js')
 const postRoutes = require('./routes/postRoutes.js')
 
@@ -15,12 +16,13 @@ mongoose.connect(
         useFindAndModify: false,
         useUnifiedTopology: true
     }
-);
+)
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(userRoutes);
-app.use(postRoutes);
+app.use(authRoutes)
+app.use(userRoutes)
+app.use(postRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
