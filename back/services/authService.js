@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const userService = require('./userService')
-const errors = require('../errors')
+const errors = require('../errors/authErrors')
 
 const privateKey = 'good_software_development_practices'
 
