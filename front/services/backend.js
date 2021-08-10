@@ -2,7 +2,7 @@ const url = 'http://localhost:3000'
 
 const backend = {}
 
-async function genericRequest(path, query) {
+async function genericPost(path, query) {
     const params = new URLSearchParams(query)
     const config = {
         headers: {
@@ -15,11 +15,16 @@ async function genericRequest(path, query) {
 }
 
 backend.login = async (username, password) => {
-    return await genericRequest('/login', 
+    return await genericPost('/login', 
         "username=" + username + "&password=" + password)
 }
 
 backend.signup = async (username, email, password) => {
-    return await genericRequest('/user', 
+    return await genericPost('/user', 
         "username=" + username + "&email=" + email + "&password=" + password)
+}
+
+backend.searchPosts = async (query) => {
+    const response = await axios.get(url + "/post", { q: query })
+    return response.data
 }
