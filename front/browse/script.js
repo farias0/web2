@@ -41,6 +41,7 @@ async function publish() {
 
 function tokenValidation() {
     const token = window.localStorage.getItem(tokenStorageKey)
+    if (!token) window.location='../index.html'
 }
 
 function logout() {
@@ -56,6 +57,7 @@ function init() {
     document.getElementById('publishing').style.display = "none"
     document.getElementById('searchButton').onclick=()=>{ triggerSearch() }
     document.getElementById('publishButton').onclick=()=>{ publish() }
+    document.getElementById('logoutButton').onclick=()=>{ logout() }
 
     const query = window.localStorage.getItem(queryStorageKey)
     if (query) {
