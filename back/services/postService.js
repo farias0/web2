@@ -1,5 +1,5 @@
 const authService = require('./authService')
-const postModel = require('../models/postSchema')
+const postModel = require('../schemas/postSchema')
 const errors = require('../errors/postErrors')
 const cacheService = new (require('./cacheService'))('posts')
 

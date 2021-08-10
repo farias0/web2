@@ -1,4 +1,4 @@
-const userModel = require('../models/userSchema')
+const userModel = require('../schemas/userSchema')
 const errors = require('../errors/userErrors')
 
 const Service = {};
