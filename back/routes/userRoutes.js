@@ -16,6 +16,9 @@ app.post("/user", async (request, response) => {
   } catch (error) {
 
     switch(error) {
+      case errors.invalidUsername:
+      case errors.invalidEmail:
+      case errors.invalidPassword:
       case errors.usernameAlreadyExists:
       case errors.emailAlreadyExists:
         response.status(400)
