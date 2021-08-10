@@ -21,7 +21,7 @@ mongoose.connect(
     }
 )
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true, limit: '1000kb' }))
 
 app.use(authRoutes)
 app.use(userRoutes)

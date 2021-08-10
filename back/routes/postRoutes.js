@@ -15,9 +15,13 @@ app.get('/post', async (request, response) => {
 })
 
 app.post('/post', async (request, response) => {
+  console.log(request.body)
+
   try {
     response.send(await postService.createAsync(request.body))
   } catch (error) {
+
+    console.log(error)
 
     switch(error) {
       case errors.invalidType:

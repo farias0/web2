@@ -6,9 +6,18 @@ function displayContent(contents) {
     const separator = "<br>_____________________________________________________________<br>"
 
     for (content of contents) {
-        frame.innerHTML += "<br><div>" + content.content + "</div>"
-
-        frame.innerHTML += separator
+        frame.innerHTML += "<br><div>" 
+        switch (content.contentType) {
+            case 'text':
+                frame.innerHTML += content.content
+                break
+            case 'image':
+                // frame.innerHTML += "<img src=\"data:image\/png;base64, \"" + content.content + "\/>"
+                break
+            case 'video':
+                break
+        }
+        frame.innerHTML += "</div>" + separator
     }
 }
 
@@ -30,14 +39,43 @@ async function searchPosts(query) {
 }
 
 async function publish() {
-    document.getElementById('searchBar').value = ''
-    var awaitCreate = backend.createPost(
+    if (document.getElementById('publishField').value) await publishText()
+    // if (document.getElementById('publishFileButton').files[0]) await publishFile()
+    window.location='./index.html'
+}
+
+async function publishFile() {
+    document.getElementById('invalidFileType').style.display = "none"
+    const file = document.getElementById('publishFileButton').files[0]
+    
+    let contentType = ''
+    if (file.type.includes('image')) contentType = 'image'
+    else if (file.type.includes('video')) contentType = 'video'
+    else {
+        document.getElementById('invalidFileType').style.display = "block"
+        return
+    }
+    document.getElementById('publishing').style.display = "block"
+
+    const reader = new FileReader()
+    reader.onload = async (event) => {
+        console.log(event.target.result)
+        await backend.createPost(
+            window.localStorage.getItem(tokenStorageKey),
+            event.target.result,
+            contentType
+        )
+    }
+    reader.readAsText(file)
+}
+
+async function publishText() {
+    document.getElementById('publishing').style.display = "block"
+    await backend.createPost(
         window.localStorage.getItem(tokenStorageKey),
         document.getElementById('publishField').value,
-        "text")
-    document.getElementById('publishing').style.display = "block"
-    await awaitCreate
-    window.location='./index.html'
+        "text"
+    )
 }
 
 function tokenValidation() {
@@ -56,6 +94,7 @@ function init() {
     document.getElementById('publishField').value = ''
     document.getElementById('success').style.display = "none"
     document.getElementById('publishing').style.display = "none"
+    document.getElementById('invalidFileType').style.display = "none"
     document.getElementById('searchButton').onclick=()=>{ triggerSearch() }
     document.getElementById('publishButton').onclick=()=>{ publish() }
     document.getElementById('logoutButton').onclick=()=>{ logout() }
