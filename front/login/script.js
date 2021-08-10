@@ -8,8 +8,15 @@ const login = async () => {
 
     try {
         const response = await backend.login(username, password)
+
         const token = response.token
         window.localStorage.setItem(tokenStorageKey, token)
+        
+        document.getElementById('success').style.display = "block"
+        setTimeout(function() {
+            window.location='../index.html'
+        }, 3000);
+
 
     } catch (error) {
         switch(error.response.status) {
@@ -27,6 +34,7 @@ const login = async () => {
 
 function init() {
     hideErrors()
+    document.getElementById('success').style.display = "none"
     document.getElementById('loginButton').onclick=()=>{ login() }
 }
 
