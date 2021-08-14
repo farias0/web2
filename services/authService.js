@@ -24,7 +24,7 @@ Service.authenticate = (token) => {
     try {
         return jwt.verify(token, privateKey).sub; 
     } catch (error) {
-        throw errors.authFailed
+        throw errors.invalidToken
     }
 }
 

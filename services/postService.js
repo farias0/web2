@@ -1,4 +1,3 @@
-const authService = require('./authService')
 const postModel = require('../schemas/postSchema')
 const errors = require('../errors/postErrors')
 const cacheService = new (require('./cacheService'))('posts')
@@ -35,10 +34,8 @@ Service.searchAsync = async (query) => {
 Service.createAsync = async (newPostData) => {
     if (!['text', 'image', 'video'].includes(newPostData.contentType)) throw errors.invalidType
 
-    newPostData.userId = authService.authenticate(newPostData.token)
-
     const newPost = new postModel(newPostData)
-    
+
     return await newPost.save()
 }
 

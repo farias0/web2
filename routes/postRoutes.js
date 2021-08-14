@@ -1,7 +1,7 @@
 const app = require('express')()
 const postService = require('../services/postService')
+const authMiddleware = require('../middlewares/authMiddleware')
 const errors = require('../errors/postErrors')
-const authErrors = require('../errors/authErrors')
 
 app.get('/post', async (request, response) => {
   try {
@@ -15,7 +15,7 @@ app.get('/post', async (request, response) => {
   }
 })
 
-app.post('/post', async (request, response) => {
+app.post('/post', authMiddleware, async (request, response) => {
   console.log(request.body)
 
   try {
@@ -27,9 +27,6 @@ app.post('/post', async (request, response) => {
     switch(error) {
       case errors.invalidType:
         response.status(400)
-        break
-      case authErrors.authFailed:
-        response.status(401)
         break
       default:
         response.status(500)
