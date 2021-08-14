@@ -21,7 +21,8 @@ mongoose.connect(
     }
 )
 
-app.use(bodyParser.urlencoded({ extended: true, limit: '1000kb' }))
+app.use(bodyParser.urlencoded({ extended: true, limit: '1000kb' })) // TODO remove it
+app.use(bodyParser.json())
 
 app.use(authRoutes)
 app.use(userRoutes)
