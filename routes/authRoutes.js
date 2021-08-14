@@ -4,7 +4,9 @@ const errors = require('../errors/authErrors')
 
 app.post("/login", async (request, response) => {
   try {
-    response.send(await authService.loginAsync(request.body))
+    const token = await authService.loginAsync(request.body)
+    response.set("x-access-token", token)
+    response.end()
   } catch (error) {
     
     switch (error) {

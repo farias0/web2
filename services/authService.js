@@ -6,17 +6,12 @@ const privateKey = 'good_software_development_practices'
 
 const Service = {}
 
-Service.loginAsync = async (loginData) => {
-    const user = await userService.getByUsernameAsync(loginData.username)
+Service.loginAsync = async ({ username, password }) => {
+    const user = await userService.getByUsernameAsync(username)
 
     if (user) {
-        if (user.password === loginData.password) {
-            const token = jwt.sign({ sub: user._id }, privateKey)
-
-            return {
-                username: user.username,
-                token
-            }
+        if (user.password === password) {
+            return jwt.sign({ sub: user._id }, privateKey)
         } else {
             throw errors.invalidPassword
         } 
