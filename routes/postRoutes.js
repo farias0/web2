@@ -3,7 +3,7 @@ const postService = require('../services/postService')
 const authMiddleware = require('../middlewares/authMiddleware')
 const errors = require('../errors/postErrors')
 
-app.get('/post', async (request, response) => {
+app.get('/post', authMiddleware, async (request, response) => {
   try {
     if (request.query && request.query.q) {
       response.send(await postService.searchAsync(request.query.q))
