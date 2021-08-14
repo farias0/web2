@@ -20,8 +20,12 @@ Service.loginAsync = async ({ username, password }) => {
     }
 }
 
-Service.getUserId = (token) => {
-    return jwt.verify(token, privateKey).sub;
+Service.authenticate = (token) => {
+    try {
+        return jwt.verify(token, privateKey).sub; 
+    } catch (error) {
+        throw errors.authFailed
+    }
 }
 
 module.exports = Service

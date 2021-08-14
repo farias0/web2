@@ -1,6 +1,7 @@
 const app = require('express')()
 const postService = require('../services/postService')
 const errors = require('../errors/postErrors')
+const authErrors = require('../errors/authErrors')
 
 app.get('/post', async (request, response) => {
   try {
@@ -27,7 +28,7 @@ app.post('/post', async (request, response) => {
       case errors.invalidType:
         response.status(400)
         break
-      case errors.invalidToken:
+      case authErrors.authFailed:
         response.status(401)
         break
       default:

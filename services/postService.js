@@ -35,13 +35,10 @@ Service.searchAsync = async (query) => {
 Service.createAsync = async (newPostData) => {
     if (!['text', 'image', 'video'].includes(newPostData.contentType)) throw errors.invalidType
 
-    try {
-        newPostData.userId = authService.getUserId(newPostData.token)
-    } catch (error) {
-        throw errors.invalidToken
-    }
+    newPostData.userId = authService.authenticate(newPostData.token)
 
     const newPost = new postModel(newPostData)
+    
     return await newPost.save()
 }
 
