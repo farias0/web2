@@ -1,9 +1,10 @@
 const app = require('express')()
 const postService = require('../services/postService')
 const authMiddleware = require('../middlewares/authMiddleware')
+const cacheMiddleware = require('../middlewares/cacheMiddleware')
 const errors = require('../errors/postErrors')
 
-app.get('/post', authMiddleware, async (request, response) => {
+app.get('/post', authMiddleware, cacheMiddleware, async (request, response) => {
   try {
     if (request.query && request.query.q) {
       response.send(await postService.searchAsync(request.query.q))

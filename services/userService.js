@@ -3,11 +3,9 @@ const errors = require('../errors/userErrors')
 
 const Service = {};
 
-Service.getAllAsync = async () => {
+/* Service.getAllAsync = async () => {
     return await userModel.find({});
-};
-
-Service.getByIdAsync = async () => {};
+};*/
 
 Service.getByUsernameAsync = async (username) => {
     return await userModel.findOne({ username })
