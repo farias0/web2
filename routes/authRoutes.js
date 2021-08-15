@@ -11,6 +11,7 @@ async function login(request, response, _) {
 
   try {
     const token = await authService.loginAsync(request.body)
+    response.set("Access-Control-Expose-Headers", "x-access-token")
     response.set("x-access-token", token)
     response.end()
   } catch (error) {
