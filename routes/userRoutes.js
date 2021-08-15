@@ -2,17 +2,19 @@ const app = require('express')()
 const userService = require('../services/userService')
 const errors = require('../errors/userErrors')
 
-/* app.get("/user", async (_, response) => {
+/* app.get("/user", async (_, response, next) => {
   try {
     response.send(await userService.getAllAsync())
+    next()
   } catch (error) {
     response.status(500).send(error)
   }
 }) */
 
-app.post("/user", async (request, response) => {
+app.post("/user", async (request, response, next) => {
   try {
     response.send(await userService.createAsync(request.body))
+    next()
   } catch (error) {
 
     switch(error) {

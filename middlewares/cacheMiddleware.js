@@ -9,4 +9,15 @@ const cache = require('express-redis-cache')({
 
 cache.on('message', message => console.log('[cacheMiddleware] ' + message))
 
-module.exports = cache.route()
+const Middleware = {}
+
+Middleware.cache = (req, res, next) => {
+    cache.route(req.originalUrl)(req, res, next)
+}
+
+Middleware.clear = (req, _, next) => {
+    const baseRoute = req.originalUrl.split("?")[0]
+    cache.del(baseRoute + "*", next)
+}
+
+module.exports = Middleware
