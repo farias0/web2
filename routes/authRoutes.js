@@ -2,12 +2,17 @@ const app = require("express")()
 const authService = require('../services/authService')
 const errors = require('../errors/authErrors')
 
-app.post("/login", async (request, response, next) => {
+app.post("/login", login)
+
+module.exports = app
+
+
+async function login(request, response, _) {
+
   try {
     const token = await authService.loginAsync(request.body)
     response.set("x-access-token", token)
     response.end()
-    next()
   } catch (error) {
     
     switch (error) {
@@ -23,6 +28,4 @@ app.post("/login", async (request, response, next) => {
 
     response.send(error.message)
   }
-})
-
-module.exports = app
+}
