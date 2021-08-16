@@ -3,10 +3,11 @@ const postService = require('../services/postService')
 const authMiddleware = require('../middlewares/authMiddleware')
 const cacheMiddleware = require('../middlewares/cacheMiddleware')
 const errors = require('../errors/postErrors')
+const upload = require('multer')()
 
 app.get('/post', authMiddleware, cacheMiddleware.cache, getPosts)
 
-app.post('/post', authMiddleware, createPost, cacheMiddleware.clear)
+app.post('/post', authMiddleware, upload.single('upload'), createPost, cacheMiddleware.clear)
 
 module.exports = app
 
@@ -28,6 +29,14 @@ async function getPosts(request, response, next) {
 }
 
 async function createPost(request, response, next) {
+  
+  // tie-in with gambiarra on authMiddleware.js
+  if (!request.body.userId) request.body.userId = request.userId
+
+  // gambiarra no. 2
+  if (request.file) {
+    request.body.content = request.file.buffer
+  }
 
   try {
     response.send(await postService.createAsync(request.body))
@@ -39,6 +48,7 @@ async function createPost(request, response, next) {
         response.status(400)
         break
       default:
+        console.log(error)
         response.status(500)
     }
 
