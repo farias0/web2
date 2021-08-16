@@ -1,11 +1,12 @@
-let redis_url = process.env.REDIS_URL
-if (!redis_url) redis_url = "127.0.0.1" // for running locally instead of heroku
-
-const cache = require('express-redis-cache')({
+const options = {
     prefix: 'web2',
-    host: redis_url,
     expire: 5 * 60
-})
+}
+
+if (process.env.REDIS_URL) options.client = require('redis').createClient(process.env.REDIS_URL)
+else options.host = "127.0.0.1" // for running locally instead of heroku
+
+const cache = require('express-redis-cache')(options)
 
 cache.on('message', message => console.log('[cacheMiddleware] ' + message))
 
